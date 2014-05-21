@@ -172,9 +172,13 @@
                     for (NSManagedObject *managedObject in managedObjects) {
                         [self.managedObjectContext deleteObject:managedObject];
                     }
+                    if (![self.managedObjectContext save:&error]) {
+                        RKLogError(@"Error cleaning entity %@: %@", entity, error);
+                    }
                 }];
             }
         }
+
     }
 
     self.hasPerformedResetIfNecessary = YES;
